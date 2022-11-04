@@ -1,4 +1,24 @@
-export const App = () => {
+import React, { Component } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SearchBar from 'components/SearchBar/SearchBar'
+import ImageGallery from 'components/ImageGallery/ImageGallery'
+
+export default class App extends Component {
+  state = {
+    search: null
+    }
+
+////////////////Получаем данные с инпута и записываем в query
+onSubmit = (search) => {
+  this.setState({
+    search: search
+  })
+}
+
+
+  render() {
+
   return (
     <div
       style={{
@@ -10,7 +30,9 @@ export const App = () => {
         color: '#010101'
       }}
     >
-      React homework template
+      <SearchBar onSubmit={this.onSubmit}/>
+      <ImageGallery search={this.state.search}/>
+      <ToastContainer />
     </div>
   );
-};
+}}
