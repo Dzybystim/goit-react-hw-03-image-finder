@@ -10,15 +10,17 @@ import ImageGallery from 'components/ImageGallery/ImageGallery'
 
 export default class App extends Component {
   state = {
-    search: null
+    search: null,
+    page: null
     }
 
 
 
 ////////////////Получаем данные с инпута и записываем в search
-onSubmit = (search) => {
+onSubmit = (search, page) => {
   this.setState({
-    search: search
+    search: search,
+    page: page
   })
 }
 
@@ -28,7 +30,7 @@ onSubmit = (search) => {
   return (
     <AppStyled>
       <SearchBar onSubmit={this.onSubmit}/>
-      <ImageGallery search={this.state.search} />
+      <ImageGallery search={this.state.search} page={this.state.page}/>
 
       <ToastContainer />
 

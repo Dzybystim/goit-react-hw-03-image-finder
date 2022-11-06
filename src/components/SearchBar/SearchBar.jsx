@@ -5,7 +5,8 @@ import {SearchBarStyled, SearchForm, SearchFormButton, SearchFormButtonLabel, Se
 
 export default class SearchBar extends Component { 
     state = {
-     search: ""
+     search: "",
+     page: 1
     }
 
 ///////////////////Функция которая записывает в стейт данные введенные в инпут
@@ -22,7 +23,7 @@ if(this.state.search.trim() === ""){
     toast.warn('Введите название фото что вы ищете')
     return 
 }
-    this.props.onSubmit(this.state.search)
+    this.props.onSubmit(this.state.search, this.state.page)
     this.reset()
 }
 
