@@ -13,6 +13,8 @@ export default class App extends Component {
     search: null
     }
 
+
+
 ////////////////Получаем данные с инпута и записываем в search
 onSubmit = (search) => {
   this.setState({
@@ -26,8 +28,10 @@ onSubmit = (search) => {
   return (
     <AppStyled>
       <SearchBar onSubmit={this.onSubmit}/>
-      <ImageGallery search={this.state.search}/>
+      <ImageGallery search={this.state.search} />
+
       <ToastContainer />
+
     </AppStyled>
   );
 }}
