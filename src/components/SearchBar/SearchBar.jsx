@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import React, { Component } from "react";
 
 import {SearchBarStyled, SearchForm, SearchFormButton, SearchFormButtonLabel, SearchFormInput} from './SearchBar.styled'
@@ -6,7 +7,8 @@ import {SearchBarStyled, SearchForm, SearchFormButton, SearchFormButtonLabel, Se
 export default class SearchBar extends Component { 
     state = {
      search: "",
-     page: 1
+     page: 1,
+     searchValue: []
     }
 
 ///////////////////Функция которая записывает в стейт данные введенные в инпут
@@ -23,14 +25,14 @@ if(this.state.search.trim() === ""){
     toast.warn('Введите название фото что вы ищете')
     return 
 }
-    this.props.onSubmit(this.state.search, this.state.page)
+    this.props.onSubmit(this.state.search, this.state.page, this.state.searchValue)
     this.reset()
 }
 
 ////////////////////Функция обновляет до начального состояния инпут ввода
 reset = () => {
     this.setState({
-        search: ""
+        search: "",
     })
   }
 
@@ -54,4 +56,9 @@ reset = () => {
       />
     </SearchForm>
   </SearchBarStyled>}
+}
+
+
+SearchBar.propTypes = {
+  onSubmit: PropTypes.func.isRequired
 }

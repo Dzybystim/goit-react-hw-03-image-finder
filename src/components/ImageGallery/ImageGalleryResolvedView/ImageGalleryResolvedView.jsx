@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem"
 import {ImageGalleryStyled} from "components/ImageGallery/ImageGallery.styled"
 
@@ -10,4 +11,8 @@ export const ImageGalleryResolvedView = ({searchValue}) => {
        largeImageURL= {value.largeImageURL}
        tags= {value.tags}  /> } )}
     </ImageGalleryStyled>
+}
+
+ImageGalleryResolvedView.propTypes = {
+  searchValue: PropTypes.array.isRequired
 }

@@ -1,73 +1,25 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 import {ImageGalleryRejectedView} from "./ImageGalleryRejectedView/ImageGalleryRejectedView"
 import {ImageGalleryResolvedView} from "./ImageGalleryResolvedView/ImageGalleryResolvedView"
 import {ImageGalleryPendingView} from "./ImageGalleryPendingView/ImageGalleryPendingView"
-import {pixabayApi} from "../../services/pixabay.api"
 import {ButtonLoadMore} from "components/Button/Button"
 
 export default class ImageGallery extends Component {
-    state = {
-        searchValue: [],
-        error: null,
-        status: 'idle',
-        page: 1
-    }
+
   
 loadMore = (event) => {
     event.preventDefault();
 
-    this.setState(prevState => ({
-        page: prevState.page+1
-    }))
+
+    this.props.onClickLoadMore(this.props.page+1)
 }
 
 
-
-componentDidUpdate(prevProps,prevState) {
-    const prevName = prevProps.search
-    const nextName = this.props.search
-
-    if(prevName !== nextName) {
-        this.setState({page: 1, searchValue: []})
-
-        this.setState({status: 'pending' })
-
-        pixabayApi(nextName, this.state.page)
-        .then(data => {
-            
-            if(data.hits.length===0){
-            return Promise.reject(new Error('По вашему запросу ничего не найдено'))}
-
-
-            this.setState(prevState => ({searchValue: [ ...prevState.searchValue, ...data.hits] , status: 'resolved'}))
-        })
-        .catch(error => this.setState({error: error, status: 'rejected'}))
-       }
-
-    
-
-    if(prevState.page !== this.state.page) {
-
-        this.setState({status: 'pending' })
-
-        pixabayApi(nextName, this.state.page)
-        .then(data => {
-
-
-            if(data.hits.length===0){
-            return Promise.reject(new Error('По вашему запросу ничего не найдено'))}
-            
-
-            this.setState(prevState => ({searchValue: [ ...prevState.searchValue, ...data.hits] , status: 'resolved'}))
-        })
-        .catch(error => this.setState({error: error, status: 'rejected'}))
-       }
-
-}
 
     render() {
-    const {searchValue, error, status} = this.state
+    const {searchValue, error, status} = this.props
 
     if(status==='idle'){
      return
@@ -92,3 +44,12 @@ componentDidUpdate(prevProps,prevState) {
 
  }
 } 
+
+
+ImageGallery.propTypes = {
+    onClickLoadMore: PropTypes.func.isRequired,
+    page: PropTypes.number.isRequired,
+    searchValue: PropTypes.array.isRequired,
+    status: PropTypes.string.isRequired
+
+}
